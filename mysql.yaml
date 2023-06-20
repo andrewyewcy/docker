@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      MYSQL_ROOT_PASSWORD: rootroot
+
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    restart: always
+    ports:
+      - 8081:80
