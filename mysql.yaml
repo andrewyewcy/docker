@@ -36,9 +36,13 @@ services:
     # Tells Docker to restart container if fail
     restart: always
 
-   # Define ports for communication between host (left) and container(right)
+    # Define ports for communication between host (left) and container(right)
     ports:
       - '8080:80'
+
+    # Define link from mysql container to phpmyadmin container
+    links:
+      - mysql:db
 
 # Define Docker volumes to store data
 volumes:
