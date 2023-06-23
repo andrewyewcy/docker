@@ -30,6 +30,10 @@ services:
   # Define a container to run phpMyAdmin
   phpmyadmin:
 
+    # Specify phpmyadmin to run after mysql has started
+    depends_on:
+      - mysql
+
     # Specify image tag to reference, refer to Docker Hub https://hub.docker.com/_/phpmyadmin
     image: phpmyadmin:5.2
 
