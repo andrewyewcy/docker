@@ -1,0 +1,76 @@
+# Specify version of docker-compose for backwards compatability
+version: '3.8'
+
+# Define services (docker containers) to run
+services:
+  
+  # Define a container named mysql to run MySQL DBMS
+  mysql:
+
+    # Specify image tag to reference, refer to Docker Hub https://hub.docker.com/_/mysql
+    image: mysql:8.0
+
+    # Tells Docker to restart container if fail
+    restart: always
+
+    # Define environment variables, different for each image
+    environment:
+      # rootroot was used in this case as an example
+      MYSQL_ROOT_PASSWORD: rootroot
+
+    # Define ports for communication between host (left) and container(right)
+    ports:
+      - '3306:3306'
+
+    # Define volumne to write data to for data persistence when container restarts
+    # Local host directory (left) : directory in container (right)
+    volumes:
+      - mysql_db_data:/var/lib/mysql
+
+  # Define a container to run phpMyAdmin
+  phpmyadmin:
+
+    # Specify phpmyadmin to run after mysql has started
+    depends_on:
+      - mysql
+
+    # Specify image tag to reference, refer to Docker Hub https://hub.docker.com/_/phpmyadmin
+    image: phpmyadmin:5.2
+
+    # Tells Docker to restart container if fail
+    restart: always
+
+    # Define ports for communication between host (left) and container(right)
+    ports:
+      - '8080:80'
+
+    # Define link from mysql container to phpmyadmin container
+    links:
+      - mysql:db
+
+  # Define jupyter lab to run in same environment
+  pyspark:
+
+    depends_on:
+      - phpmyadmin
+    
+    image: pyspark_mysql_test
+
+    restart: always
+
+    ports:
+      - '10000:8888'
+
+    volumes:
+      - ${PWD}:/home/jovyan/work
+
+# Define Docker volumes to store data
+volumes:
+
+  # Specify volume name
+  mysql_db_data:
+
+    # Tells docker that volume is stored on local computer
+    driver: local 
+
+  

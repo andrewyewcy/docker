@@ -1,3 +1,9 @@
+# This YAML file sets up a Docker network with Pyspark notebook, MySQL and PhpMyAdmin containers inside
+# This is the YAML file found in https://andrewyewcy.com/Data-Ingestion-with-SQLAlchemy-+-Python/
+
+# To run this file, input the following in a terminal pointing to this directory:
+# docker-compose -f setup.yaml up
+
 # Specify version of docker-compose for backwards compatability
 version: '3.8'
 
